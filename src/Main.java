@@ -24,7 +24,17 @@ public class Main {
         }
     }
 
+    private static void printMenu() {
+        System.out.println("Добро пожаловать в приложение-счётчик!");
+        System.out.println("Команды:");
+        System.out.println("/inc - увеличить значение счётчика на 1");
+        System.out.println("/stop - завершить работу");
+        System.out.println("/reset - сбросить значение счётчика\n");
+    }
+
     public static void main(String[] args) throws Exception {
+        printMenu();
+
         Main app = new Main();
 
         // Загружаем счётчик из файла
@@ -34,6 +44,7 @@ public class Main {
             // Выводим текущее значение счётчика
             System.out.print("Текущее значение: ");
             System.out.println(counter.getValue());
+            System.out.print("Пожалуйста, введите команду: ");
 
             // Считываем команду от пользователя
             String command = scanner.nextLine().trim();
