@@ -9,7 +9,7 @@ public class Main {
     private Counter loadCounterFromFile() throws IOException, ClassNotFoundException {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(COUNTER_FILE_NAME))) {
             Counter counter = (Counter) ois.readObject();
-            System.out.printf("Счётчик загружен, значение '%d'%n", counter.getValue());
+            System.out.printf("Счётчик загружен, текущее значение '%d'%n", counter.getValue());
             return counter;
         } catch (FileNotFoundException e) {
             System.err.println("Файл со значением счётчика не найден. Создаётся новый счётчик.");
@@ -25,8 +25,8 @@ public class Main {
     }
 
     private static void printMenu() {
-        System.out.println("Добро пожаловать в приложение-счётчик!");
-        System.out.println("Команды:");
+        System.out.println("Добро пожаловать в приложение - Счётчик!");
+        System.out.println("Команды приложения:");
         System.out.println("/inc - увеличить значение счётчика на 1");
         System.out.println("/stop - завершить работу");
         System.out.println("/reset - сбросить значение счётчика\n");
@@ -40,25 +40,23 @@ public class Main {
         // Загружаем счётчик из файла
         Counter counter = app.loadCounterFromFile();
 
-        while (true) {
-            // Выводим текущее значение счётчика
-            System.out.print("Текущее значение: ");
-            System.out.println(counter.getValue());
-            System.out.print("Пожалуйста, введите команду: ");
+        System.out.print("Пожалуйста, введите команду: ");
 
+        while (true) {
             // Считываем команду от пользователя
             String command = scanner.nextLine().trim();
 
             if ("/inc".equals(command)) {
                 app.processCommand(new IncrementCommand(), counter);
             } else if ("/stop".equals(command)) {
-                System.out.println("Завершаю работу");
+                System.out.printf("Завершаю работу, текущее значение '%d'%n", counter.getValue());
                 app.saveCounterToFile(counter);
                 break;
             } else if ("/reset".equals(command)) {
                 app.processCommand(new ResetCommand(), counter);
             } else {
                 System.err.println("Неизвестная команда!");
+                System.err.print("Пожалуйста, введите корректную команду: ");
             }
         }
 
